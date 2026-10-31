@@ -1,3 +1,5 @@
+
+//Trần Văn Đạt - CE190117
 package fu.sba301.hotel.repository;
 
 import fu.sba301.hotel.entity.BookingDetail;
@@ -13,7 +15,7 @@ public interface BookingDetailRepository extends JpaRepository<BookingDetail, Bo
     // Kiểm tra xem phòng đã từng được thuê chưa (phục vụ logic xóa vs cập nhật status)
     boolean existsByRoom_RoomId(Integer roomId);
 
-    // Kiểm tra trùng lịch đặt phòng (Collision checking)
+    // Kiểm tra trùng lịch đặt phòng 
     @Query("""
         SELECT COUNT(bd) > 0 FROM BookingDetail bd
         WHERE bd.room.roomId = :roomId
