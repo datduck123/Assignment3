@@ -1,3 +1,4 @@
+//Trần Văn Đạt - CE190117
 package fu.sba301.hotel.config;
 
 import fu.sba301.hotel.security.JwtAuthenticationFilter;
@@ -48,7 +49,6 @@ public class SecurityConfig {
                 .requestMatchers("/api/auth/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                 // Yêu cầu đề bài: Khách không cần login để xem danh sách phòng
                 .requestMatchers(HttpMethod.GET, "/api/rooms/**", "/api/room-types/**").permitAll()
-                // Phân quyền Customer & Staff
                 .requestMatchers("/api/customer/profile/**").hasAnyRole("CUSTOMER", "STAFF")
                 .requestMatchers("/api/customer/bookings/**").hasRole("CUSTOMER")
                 .requestMatchers("/api/staff/**").hasRole("STAFF")
