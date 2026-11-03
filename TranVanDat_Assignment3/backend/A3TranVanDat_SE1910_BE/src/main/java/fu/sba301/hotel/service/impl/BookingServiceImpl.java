@@ -60,7 +60,7 @@ public class BookingServiceImpl implements BookingService {
             throw new BadRequestException("At least one room must be selected for booking");
         }
 
-        // TỰ ĐỘNG SINH KHÓA CHÍNH VÌ BẢNG SQL KHÔNG CÓ IDENTITY
+        // TỰ ĐỘNG SINH KHÓA CHÍNH
         Integer nextReservationId = bookingRepository.getNextReservationId();
 
         BookingReservation reservation = BookingReservation.builder()

@@ -18,7 +18,6 @@ import java.util.List;
 @Builder
 public class BookingReservation {
 
-    // Trong script SQL bảng này KHÔNG có IDENTITY, do đó bỏ @GeneratedValue và tự sinh ID
     @Id
     @Column(name = "BookingReservationID")
     private Integer bookingReservationId;
@@ -26,7 +25,7 @@ public class BookingReservation {
     @Column(name = "BookingDate")
     private LocalDate bookingDate;
 
-    @Column(name = "TotalPrice", precision = 19, scale = 4) // money type
+    @Column(name = "TotalPrice", precision = 19, scale = 4) 
     private BigDecimal totalPrice;
 
     @ManyToOne(fetch = FetchType.LAZY)

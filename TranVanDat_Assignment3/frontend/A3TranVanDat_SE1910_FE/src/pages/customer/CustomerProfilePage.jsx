@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axiosClient from "../../api/axiosClient";
+import { validateCustomerProfile } from "../../utils/validation";
 
 export default function CustomerProfilePage() {
   const [profile, setProfile] = useState({
@@ -7,7 +8,6 @@ export default function CustomerProfilePage() {
     telephone: "",
     emailAddress: "",
     customerBirthday: "",
-    password: "",
   });
   const [msg, setMsg] = useState({ type: "", text: "" });
   const [loading, setLoading] = useState(false);
@@ -19,18 +19,27 @@ export default function CustomerProfilePage() {
         telephone: res.telephone || "",
         emailAddress: res.emailAddress || "",
         customerBirthday: res.customerBirthday || "",
-        password: "",
       });
     });
   }, []);
 
   const handleUpdate = async (e) => {
     e.preventDefault();
+    const validation = validateCustomerProfile(profile);
+    if (!validation.isValid) {
+      setMsg({ type: "error", text: validation.error });
+      return;
+    }
+
     setMsg({ type: "", text: "" });
     setLoading(true);
 
     try {
-      await axiosClient.put("/customer/profile", profile);
+      const payload = {
+        ...profile,
+        customerBirthday: profile.customerBirthday ? profile.customerBirthday : null,
+      };
+      await axiosClient.put("/customer/profile", payload);
       setMsg({ type: "success", text: "Profile updated successfully!" });
     } catch (err) {
       setMsg({
@@ -109,20 +118,6 @@ export default function CustomerProfilePage() {
               value={profile.customerBirthday}
               onChange={(e) =>
                 setProfile({ ...profile, customerBirthday: e.target.value })
-              }
-            />
-          </div>
-
-          <div className="form-group">
-            <label className="form-label">
-              New Password (Leave blank to keep unchanged)
-            </label>
-            <input
-              type="password"
-              className="form-control"
-              value={profile.password}
-              onChange={(e) =>
-                setProfile({ ...profile, password: e.target.value })
               }
             />
           </div>

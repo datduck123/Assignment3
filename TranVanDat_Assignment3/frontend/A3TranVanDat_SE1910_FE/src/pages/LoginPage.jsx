@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { validateLogin } from "../utils/validation";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -13,6 +14,12 @@ export default function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const validation = validateLogin({ email, password });
+    if (!validation.isValid) {
+      setError(validation.error);
+      return;
+    }
+
     setError("");
     setLoading(true);
 

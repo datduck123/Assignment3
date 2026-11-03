@@ -12,7 +12,7 @@ import java.time.LocalDate;
 
 public interface BookingDetailRepository extends JpaRepository<BookingDetail, BookingDetailId> {
     
-    // Kiểm tra xem phòng đã từng được thuê chưa (phục vụ logic xóa vs cập nhật status)
+    // Kiểm tra xem phòng đã từng được thuê chưa
     boolean existsByRoom_RoomId(Integer roomId);
 
     // Kiểm tra trùng lịch đặt phòng 

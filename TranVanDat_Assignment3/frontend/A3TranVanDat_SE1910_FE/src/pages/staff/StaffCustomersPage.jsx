@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axiosClient from "../../api/axiosClient";
+import { validateStaffCustomer } from "../../utils/validation";
 
 export default function StaffCustomersPage() {
   const [customers, setCustomers] = useState([]);
@@ -34,8 +35,18 @@ export default function StaffCustomersPage() {
 
   const handleSave = async (e) => {
     e.preventDefault();
+    const validation = validateStaffCustomer(form);
+    if (!validation.isValid) {
+      alert(validation.error);
+      return;
+    }
+
     try {
-      await axiosClient.put(`/staff/customers/${modal.data.customerId}`, form);
+      const payload = {
+        ...form,
+        customerBirthday: form.customerBirthday ? form.customerBirthday : null,
+      };
+      await axiosClient.put(`/staff/customers/${modal.data.customerId}`, payload);
       setModal({ isOpen: false, data: null });
       loadCustomers();
     } catch (err) {

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import { validateRegister } from "../utils/validation";
 
 export default function RegisterPage() {
   const [form, setForm] = useState({
@@ -18,11 +19,21 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const validation = validateRegister(form);
+    if (!validation.isValid) {
+      setError(validation.error);
+      return;
+    }
+
     setError("");
     setLoading(true);
 
     try {
-      await register(form);
+      const payload = {
+        ...form,
+        customerBirthday: form.customerBirthday ? form.customerBirthday : null,
+      };
+      await register(payload);
       alert("Registration successful! Please login.");
       navigate("/login");
     } catch (err) {

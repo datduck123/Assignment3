@@ -35,6 +35,6 @@ public class BookingDetail {
     @Column(name = "EndDate", nullable = false)
     private LocalDate endDate;
 
-    @Column(name = "ActualPrice", precision = 19, scale = 4) // money type
+    @Column(name = "ActualPrice", precision = 19, scale = 4) 
     private BigDecimal actualPrice;
 }

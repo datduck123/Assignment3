@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axiosClient from "../../api/axiosClient";
+import { validateRoom } from "../../utils/validation";
 
 export default function StaffRoomsPage() {
   const [rooms, setRooms] = useState([]);
@@ -56,6 +57,12 @@ export default function StaffRoomsPage() {
 
   const handleSave = async (e) => {
     e.preventDefault();
+    const validation = validateRoom(form);
+    if (!validation.isValid) {
+      alert(validation.error);
+      return;
+    }
+
     try {
       if (modal.mode === "CREATE") {
         await axiosClient.post("/staff/rooms", form);
@@ -194,10 +201,11 @@ export default function StaffRoomsPage() {
                   className="form-control"
                   value={form.roomTypeId}
                   onChange={(e) =>
-                    setForm({ ...form, roomTypeId: Number(e.target.value) })
+                    setForm({ ...form, roomTypeId: e.target.value ? Number(e.target.value) : "" })
                   }
                   required
                 >
+                  <option value="">-- Select Room Type --</option>
                   {roomTypes.map((t) => (
                     <option key={t.roomTypeId} value={t.roomTypeId}>
                       {t.roomTypeName}

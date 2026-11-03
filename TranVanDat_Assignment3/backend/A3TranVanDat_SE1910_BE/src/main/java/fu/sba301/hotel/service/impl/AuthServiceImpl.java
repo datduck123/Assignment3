@@ -80,7 +80,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public CustomerResponse register(RegisterRequest request) {
-        if (staffEmail.equalsIgnoreCase(request.emailAddress()) || customerRepository.existsByEmailAddressIgnoreCase(request.emailAddress())) {
+        if ((staffEmail != null && staffEmail.equalsIgnoreCase(request.emailAddress())) || customerRepository.existsByEmailAddressIgnoreCase(request.emailAddress())) {
             throw new ConflictException("Email address already exists in the system: " + request.emailAddress());
         }
 

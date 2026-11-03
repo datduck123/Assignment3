@@ -5,6 +5,7 @@ package fu.sba301.hotel.security;
 import fu.sba301.hotel.entity.Customer;
 import fu.sba301.hotel.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;
@@ -29,10 +30,10 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         // 1. Kiểm tra tài khoản Staff cấu hình trong application.properties
-        if (staffEmail.equalsIgnoreCase(email)) {
+        if (staffEmail != null && staffEmail.equalsIgnoreCase(email)) {
             return new User(
                     staffEmail,
-                    staffPassword,
+                    staffPassword != null ? staffPassword : "",
                     Collections.singletonList(new SimpleGrantedAuthority("ROLE_STAFF"))
             );
         }
@@ -47,7 +48,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         return new User(
                 customer.getEmailAddress(),
-                customer.getPassword(),
+                customer.getPassword() != null ? customer.getPassword() : "",
                 Collections.singletonList(new SimpleGrantedAuthority("ROLE_CUSTOMER"))
         );
     }

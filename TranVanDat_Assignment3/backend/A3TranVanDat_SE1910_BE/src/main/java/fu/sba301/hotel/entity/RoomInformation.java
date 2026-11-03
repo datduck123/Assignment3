@@ -36,6 +36,6 @@ public class RoomInformation {
     @Column(name = "RoomStatus")
     private Byte roomStatus; // 1 = Active, 0 = Inactive
 
-    @Column(name = "RoomPricePerDay", precision = 19, scale = 4) // SQL Server money type
+    @Column(name = "RoomPricePerDay", precision = 19, scale = 4) 
     private BigDecimal roomPricePerDay;
 }

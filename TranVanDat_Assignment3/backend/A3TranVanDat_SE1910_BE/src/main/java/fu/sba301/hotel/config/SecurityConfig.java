@@ -46,7 +46,7 @@ public class SecurityConfig {
             .cors(Customizer.withDefaults())
             .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                .requestMatchers("/api/auth/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/error").permitAll()
                 // Yêu cầu đề bài: Khách không cần login để xem danh sách phòng
                 .requestMatchers(HttpMethod.GET, "/api/rooms/**", "/api/room-types/**").permitAll()
                 .requestMatchers("/api/customer/profile/**").hasAnyRole("CUSTOMER", "STAFF")

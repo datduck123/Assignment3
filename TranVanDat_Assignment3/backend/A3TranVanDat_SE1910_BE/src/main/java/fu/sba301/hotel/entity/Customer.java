@@ -35,7 +35,6 @@ public class Customer {
     @Column(name = "CustomerStatus")
     private Byte customerStatus; // 1 = Active, 0 = Disabled
 
-    // Lưu ý: script gốc nvarchar(50), để tương thích BCrypt 60 chars ta dùng length 120
     @Column(name = "Password", length = 120)
     private String password;
 }

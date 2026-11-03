@@ -108,9 +108,6 @@ public class RoomServiceImpl implements RoomService {
         RoomInformation room = roomRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Room not found: " + id));
 
-        // YÊU CẦU ĐẶC THÙ ASSIGNMENT 03:
-        // "The delete action will delete room information in the case this information is not belong to any renting transaction.
-        // If the room information is already stored in a booking detail, just change the status."
         boolean isRented = bookingDetailRepository.existsByRoom_RoomId(id);
         if (isRented) {
             room.setRoomStatus((byte) 0); // Đã từng thuê -> Chỉ đổi status

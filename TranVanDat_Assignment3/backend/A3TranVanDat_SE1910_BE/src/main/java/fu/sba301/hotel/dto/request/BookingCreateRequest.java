@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotEmpty;
 import java.util.List;
 
 public record BookingCreateRequest(
-    Integer customerId, // Null nếu Customer online tự đặt, có ID nếu Staff đặt offline
+    Integer customerId,
 
     @NotEmpty(message = "Must select at least one room")
     @Valid
